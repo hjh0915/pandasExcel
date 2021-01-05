@@ -4,6 +4,8 @@ sys.path.append('.')
 import pddb
 import unittest
 
+WORK_ORDER = ['新装', '移机', '故障单']
+
 class TestPdata(unittest.TestCase):
     """Tester for the function patients_with_missing_values in
     treatment_functions.
@@ -33,6 +35,11 @@ class TestPdata(unittest.TestCase):
         x = self.db.get_total_02(item_type, over_time='是')
         print(x)
 
+    def test_get_total_03(self):
+        """测试计算缓装数量"""
+        x = self.db.get_total_03(late_time='是')
+        print(x)
+
     def test_gen_data_01(self):
         """测试生成第一部分的data pandas"""
         result = self.db.get_total_01()
@@ -60,6 +67,19 @@ class TestPdata(unittest.TestCase):
 
         df = pddb.merge_data(data1, data2)
         print(df)
+
+    def test_merge_data_02(self):
+        """测试生成一个合并的df"""
+        for item_type in WORK_ORDER:
+            result = self.db.get_total_01()
+            data1 = self.pd.gen_data_01(result, item_type)
+            
+            result = self.db.get_total_02(item_type, over_time='是')
+            new_result = pddb.fill_data(result)
+            data2 = self.pd.gen_data_02(new_result, item_type)
+
+            df = pddb.merge_data(data1, data2)
+            print(df)
 
 if __name__ == '__main__':
     unittest.main(exit=False)
