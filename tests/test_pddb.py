@@ -10,7 +10,7 @@ class TestPdata(unittest.TestCase):
     """
 
     def setUp(self):
-        file = 'D:/work/demo/initdata/details.xlsx'
+        file = 'initdata/details.xlsx'
         self.db = pddb.EData(file)
         self.pd = pddb.EFrame()
 

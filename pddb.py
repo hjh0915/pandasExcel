@@ -23,7 +23,7 @@ def fill_data(result):
             s.append(d)
     return result + s
 
-class EData:
+class EData(object):
     def __init__(self, filename):
         xl_file = pd.ExcelFile(filename)
         self.df = xl_file.parse('Sheet1')
@@ -53,7 +53,7 @@ class EData:
             results.append(d) 
         return results
 
-class EFrame():
+class EFrame(object):
     def __init__(self):
         pass
 
@@ -94,14 +94,14 @@ def write_excel(filename, df):
 
 if __name__ == '__main__':
     file = 'initdata/details.xlsx'
-    db = EData(file)
+    ed = EData(file)
     ef = EFrame()
 
     item_type = '新装'
-    result = db.get_total_01()
+    result = ed.get_total_01()
     data1 = ef.gen_data_01(result, item_type)
     
-    result = db.get_total_02(item_type, over_time='是')
+    result = ed.get_total_02(item_type, over_time='是')
     new_result = fill_data(result)
     data2 = ef.gen_data_02(new_result, item_type)
 
